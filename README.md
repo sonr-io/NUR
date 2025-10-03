@@ -7,6 +7,35 @@
 
 This repository provides Nix packages for [Sonr](https://sonr.io) - a decentralized identity network.
 
+## Quickstart with Devbox
+
+The easiest way to get started is using [Devbox](https://www.jetify.com/devbox). Add packages to your project by referencing this repository as a Nix Flake:
+
+```bash
+# Add snrd (Sonr blockchain daemon)
+devbox add github:sonr-io/nur#snrd
+
+# Add hway (Highway network component)
+devbox add github:sonr-io/nur#hway
+```
+
+Or add them directly to your `devbox.json`:
+
+```json
+{
+  "packages": [
+    "github:sonr-io/nur#snrd",
+    "github:sonr-io/nur#hway"
+  ]
+}
+```
+
+Then start your Devbox shell:
+
+```bash
+devbox shell
+```
+
 ## Packages
 
 - **snrd**: Sonr blockchain daemon - decentralized identity network
