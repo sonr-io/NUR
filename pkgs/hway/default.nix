@@ -12,22 +12,22 @@ system ? builtins.currentSystem
 }:
 let
   shaMap = {
-    x86_64-linux = "0gqa6362kdbqhk3sdhwapzk0jzs87b6xdn158j3pkb48vbwxq43m";
-    aarch64-linux = "0i2qn7qh9vn5wmd9g3sr6pvvgjyriqygw5yndp3xlc0pdz85x6g0";
-    x86_64-darwin = "0fb9krg29ifi73gawbfsl7alha7ai9vvvfwmlbf9003yzwz590bd";
-    aarch64-darwin = "1qf1jp197764gxqjbknp8gfy6vlcz26z0f7v3ax40haz9jklnfln";
+    x86_64-linux = "1xykdcwqq1ypichg6c14az33p9pcm7jzffs2676qags3lpal7ffk";
+    aarch64-linux = "1cdvi28wzfijaw8fvs6gly4l6cv81h3vyy342ycyg5dscvkh88hr";
+    x86_64-darwin = "1kbnkjljynwsn923p390z0s9g8zk33ab94i92sc4yghqbhfh17vn";
+    aarch64-darwin = "0qkw7dm6ps94j8qfk0w3296f5ykv0pg66r4ymsh7x3zpfapc41h5";
   };
 
   urlMap = {
-    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.1/hway_linux_x86_64.tar.gz";
-    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.1/hway_linux_arm64.tar.gz";
-    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.1/hway_darwin_x86_64.tar.gz";
-    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.1/hway_darwin_arm64.tar.gz";
+    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_linux_x86_64.tar.gz";
+    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_linux_arm64.tar.gz";
+    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_darwin_x86_64.tar.gz";
+    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_darwin_arm64.tar.gz";
   };
 in
 stdenvNoCC.mkDerivation {
   pname = "hway";
-  version = "0.0.1";
+  version = "0.0.2";
   src = fetchurl {
     url = urlMap.${system};
     sha256 = shaMap.${system};
