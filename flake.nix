@@ -1,5 +1,5 @@
 {
-  description = "My personal NUR repository";
+  description = "Sonr NUR repository - Nix packages for Sonr blockchain daemon and network components";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   outputs = { self, nixpkgs }:
     let

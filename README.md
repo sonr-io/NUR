@@ -1,37 +1,91 @@
-# nur-packages-template
+# Sonr NUR Packages
 
-**A template for [NUR](https://github.com/nix-community/NUR) repositories**
+**[NUR](https://github.com/nix-community/NUR) repository for Sonr releases**
 
-## Setup
+![Build and populate cache](https://github.com/sonr-io/nur/workflows/Build%20and%20populate%20cache/badge.svg)
+[![Cachix Cache](https://img.shields.io/badge/cachix-sonr-blue.svg)](https://sonr.cachix.org)
 
-1. Click on [Use this template](https://github.com/nix-community/nur-packages-template/generate) to start a repo based on this template. (Do _not_ fork it.)
-2. Add your packages to the [pkgs](./pkgs) directory and to
-   [default.nix](./default.nix)
-   * Remember to mark the broken packages as `broken = true;` in the `meta`
-     attribute, or travis (and consequently caching) will fail!
-   * Library functions, modules and overlays go in the respective directories
-3. Choose your CI: Depending on your preference you can use github actions (recommended) or [Travis ci](https://travis-ci.com).
-   - Github actions: Change your NUR repo name and optionally add a cachix name in [.github/workflows/build.yml](./.github/workflows/build.yml) and change the cron timer
-     to a random value as described in the file
-   - Travis ci: Change your NUR repo name and optionally your cachix repo name in 
-   [.travis.yml](./.travis.yml). Than enable travis in your repo. You can add a cron job in the repository settings on travis to keep your cachix cache fresh
-5. Change your travis and cachix names on the README template section and delete
-   the rest
-6. [Add yourself to NUR](https://github.com/nix-community/NUR#how-to-add-your-own-repository)
+This repository provides Nix packages for [Sonr](https://sonr.io) - a decentralized identity network.
 
-## README template
+## Packages
 
-# nur-packages
+- **snrd**: Sonr blockchain daemon - decentralized identity network
+- **hway**: Highway network component
 
-**My personal [NUR](https://github.com/nix-community/NUR) repository**
+## Installation
 
-<!-- Remove this if you don't use github actions -->
-![Build and populate cache](https://github.com/<YOUR-GITHUB-USER>/nur-packages/workflows/Build%20and%20populate%20cache/badge.svg)
+### Using with Nix Flakes
 
-<!--
-Uncomment this if you use travis:
+Add this to your `flake.nix`:
 
-[![Build Status](https://travis-ci.com/<YOUR_TRAVIS_USERNAME>/nur-packages.svg?branch=master)](https://travis-ci.com/<YOUR_TRAVIS_USERNAME>/nur-packages)
--->
-[![Cachix Cache](https://img.shields.io/badge/cachix-<YOUR_CACHIX_CACHE_NAME>-blue.svg)](https://<YOUR_CACHIX_CACHE_NAME>.cachix.org)
+```nix
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nur.url = "github:nix-community/NUR";
+  };
+
+  outputs = { self, nixpkgs, nur }: {
+    nixosConfigurations.yourhostname = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        {
+          nixpkgs.overlays = [ nur.overlay ];
+        }
+        # Then use: environment.systemPackages = [ pkgs.nur.repos.sonr-io.snrd ];
+      ];
+    };
+  };
+}
+```
+
+### Using with Legacy Nix
+
+Add the NUR to your `~/.config/nixpkgs/config.nix`:
+
+```nix
+{
+  packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  };
+}
+```
+
+Then install packages:
+
+```bash
+nix-env -iA nur.repos.sonr-io.snrd
+nix-env -iA nur.repos.sonr-io.hway
+```
+
+## Development
+
+### Building packages locally
+
+```bash
+# Build a specific package
+nix-build -A snrd
+
+# Build with flakes
+nix build .#snrd
+```
+
+### Testing
+
+```bash
+# Test evaluation
+nix-env -f . -qa \* --meta --xml \
+  --allowed-uris https://static.rust-lang.org \
+  --option restrict-eval true \
+  --option allow-import-from-derivation true \
+  --drv-path --show-trace \
+  -I nixpkgs=$(nix-instantiate --find-file nixpkgs) \
+  -I $PWD
+```
+
+## License
+
+Apache License 2.0
 
