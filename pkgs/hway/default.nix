@@ -12,22 +12,22 @@ system ? builtins.currentSystem
 }:
 let
   shaMap = {
-    x86_64-linux = "0ghha9k1lif2fvni5kqn3ym6pf111z1f4qzsrmfzhc6g7y2f4x6y";
-    aarch64-linux = "0rgwd463a6xg12lspycab1sd9ppvj3skp7k1h50gzi00swjiyyra";
-    x86_64-darwin = "148ijz0sm4g41qn4b0japv8l8rsizg3023nkqk0zx41y7b3zziq6";
-    aarch64-darwin = "06jfh4n8ig7rmgr27ggi2p9s5l7szi7pld32rvsvz65ck9y1vm4b";
+    x86_64-linux = "17miqc81s2s91xjx6nncz98wcbz2jbgjf1si1iagnwyz7vivnc16";
+    aarch64-linux = "0y4sb0s65j585188w21zsaw0h6h02zjdd9m30y0v2aj08xm7pdsn";
+    x86_64-darwin = "10fldi4ww7vc9h1lq0g32px325dsmw7n5y678j7l78j8w4qda9xn";
+    aarch64-darwin = "1brfgbxsp9ly16l7zz4484s5k5j2xplab8qsk3jbqgshppcfax50";
   };
 
   urlMap = {
-    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_linux_x86_64.tar.gz";
-    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_linux_arm64.tar.gz";
-    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_darwin_x86_64.tar.gz";
-    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_darwin_arm64.tar.gz";
+    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.3/hway_linux_x86_64.tar.gz";
+    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.3/hway_linux_arm64.tar.gz";
+    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.3/hway_darwin_x86_64.tar.gz";
+    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.3/hway_darwin_arm64.tar.gz";
   };
 in
 stdenvNoCC.mkDerivation {
   pname = "hway";
-  version = "0.0.2";
+  version = "0.0.3";
   src = fetchurl {
     url = urlMap.${system};
     sha256 = shaMap.${system};
@@ -49,7 +49,7 @@ stdenvNoCC.mkDerivation {
   meta = {
     description = "Highway network component for Sonr";
     homepage = "https://sonr.io";
-    license = lib.licenses.gpl3Plus;
+    license = lib.licenses.gpl3;
 
     sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
 
