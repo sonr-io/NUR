@@ -12,22 +12,22 @@ system ? builtins.currentSystem
 }:
 let
   shaMap = {
-    x86_64-linux = "14vjmfdpbj9ins08mzaxv339r63d1hv8zsyhczkh8ljcpgrjrfx4";
-    aarch64-linux = "1y7s9m2pk7nkfwnp8ghdbb3x6ri8m1v4207yy350kcv1land2l9n";
-    x86_64-darwin = "1fms15nfkxhvn8bf0rs77pfwxpfrhkq6j7cg8gzjkjzp40b6yabm";
-    aarch64-darwin = "00av4499kww8pch6nbx5wsjidaifmixf8yvc5hhxnm1r0yc28wyd";
+    x86_64-linux = "1bw4j38xljr6sqfnxxzpz7xknjiig8lisrnhj9gc8znln3ni2a2k";
+    aarch64-linux = "1xqsh8pfc3xsjzk5g0lwwwap99szsd10az8c3wgifhdn4c5fc7yf";
+    x86_64-darwin = "0wmwfik41bjsfcgv6dh2vk80gf4vjxxfflwdlap49qxb9gay5g16";
+    aarch64-darwin = "1zwpjsynhv0djpqwzcks0b6q6pb9ba4r085ag69yg5rhkd7570k1";
   };
 
   urlMap = {
-    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/snrd/v0.0.1/snrd_linux_x86_64.tar.gz";
-    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/snrd/v0.0.1/snrd_linux_arm64.tar.gz";
-    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/snrd/v0.0.1/snrd_darwin_x86_64.tar.gz";
-    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/snrd/v0.0.1/snrd_darwin_arm64.tar.gz";
+    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.2/snrd_linux_x86_64.tar.gz";
+    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.2/snrd_linux_arm64.tar.gz";
+    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.2/snrd_darwin_x86_64.tar.gz";
+    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.2/snrd_darwin_arm64.tar.gz";
   };
 in
 stdenvNoCC.mkDerivation {
   pname = "snrd";
-  version = "0.0.1";
+  version = "0.0.2";
   src = fetchurl {
     url = urlMap.${system};
     sha256 = shaMap.${system};
@@ -40,7 +40,8 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     mkdir -p $out/bin
     cp -vr ./snrd $out/bin/snrd
-    wrapProgram $out/bin/snrd --prefix PATH : ${lib.makeBinPath ([ glibc stdenv.cc.cc.lib ])}
+    wrapProgram $out/bin/snrd --prefix PATH : ${lib.makeBinPath ([ stdenv glibc ])}
+    wrapProgram $out/bin/snrd --prefix PATH : ${lib.makeBinPath [ glibc stdenv.cc.cc.lib ]}
   '';
 
   system = system;
