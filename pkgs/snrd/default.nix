@@ -12,22 +12,22 @@ system ? builtins.currentSystem
 }:
 let
   shaMap = {
-    x86_64-linux = "1bw4j38xljr6sqfnxxzpz7xknjiig8lisrnhj9gc8znln3ni2a2k";
-    aarch64-linux = "1xqsh8pfc3xsjzk5g0lwwwap99szsd10az8c3wgifhdn4c5fc7yf";
-    x86_64-darwin = "0wmwfik41bjsfcgv6dh2vk80gf4vjxxfflwdlap49qxb9gay5g16";
-    aarch64-darwin = "1zwpjsynhv0djpqwzcks0b6q6pb9ba4r085ag69yg5rhkd7570k1";
+    x86_64-linux = "0csc8cshrf43p184r16xyk1wm9mcx2vg1zk9c2wv9z38ing1b8fc";
+    aarch64-linux = "0g2k56r2z6iq2hi9h3m4g8r2aj4x3lm9fjf758hnwhhcn5xrmvaj";
+    x86_64-darwin = "0lzfi6j558mm8zpfzbb13qlhk9vjxji1w1p4iknn0ph0nsjpcx7i";
+    aarch64-darwin = "00md6lqy0xv37mmya48ypri3w1sg6h19g3r5yl6bjh4mb84ldn0q";
   };
 
   urlMap = {
-    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.2/snrd_linux_x86_64.tar.gz";
-    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.2/snrd_linux_arm64.tar.gz";
-    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.2/snrd_darwin_x86_64.tar.gz";
-    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.2/snrd_darwin_arm64.tar.gz";
+    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.3/snrd_linux_x86_64.tar.gz";
+    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.3/snrd_linux_arm64.tar.gz";
+    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.3/snrd_darwin_x86_64.tar.gz";
+    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/snrd%2Fv0.0.3/snrd_darwin_arm64.tar.gz";
   };
 in
 stdenvNoCC.mkDerivation {
   pname = "snrd";
-  version = "0.0.2";
+  version = "0.0.3";
   src = fetchurl {
     url = urlMap.${system};
     sha256 = shaMap.${system};
@@ -49,7 +49,7 @@ stdenvNoCC.mkDerivation {
   meta = {
     description = "Sonr blockchain daemon - decentralized identity network";
     homepage = "https://sonr.io";
-    license = lib.licenses.gpl3Plus;
+    license = lib.licenses.gpl3;
 
     sourceProvenance = [ lib.sourceTypes.binaryNativeCode ];
 
