@@ -12,22 +12,22 @@ system ? builtins.currentSystem
 }:
 let
   shaMap = {
-    x86_64-linux = "0vwim3493vz30k363gllsk2jg1dfzd3a0ibhc743rrqr3m9xlxbj";
-    aarch64-linux = "132ga6f8fd27zl3yrsp8i10hnpznbdplcf0a4hjb9f8sqzi38ps2";
-    x86_64-darwin = "0zqxcwzvhsc4hzgr36x9yfv2xhbglp345gdrfn5njzg5p9knkffr";
-    aarch64-darwin = "0vq223m8va30ggywr5zkf2f6gjsghp66alrvfbpnygg82kfw1c9h";
+    x86_64-linux = "0802bcvbs8ixbvmk24v1h5y1nnyqvdg4nyqmaj2n9xvpfa3p0i54";
+    aarch64-linux = "0mxc2ify00198sqg7js7j220w70h6qdipx5czqqjqc2yxdak5a6s";
+    x86_64-darwin = "0bxsggj2m8j42jkxq70ws0dd9z2md13g262jcc0krxcihvz5xb7s";
+    aarch64-darwin = "036fkj7mc2d7ajxdmjsajz3w5bzmn9hsxhcf7ikx37m0i0371d71";
   };
 
   urlMap = {
-    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/hway/v0.0.1/hway_linux_x86_64.tar.gz";
-    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/hway/v0.0.1/hway_linux_arm64.tar.gz";
-    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway/v0.0.1/hway_darwin_x86_64.tar.gz";
-    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway/v0.0.1/hway_darwin_arm64.tar.gz";
+    x86_64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_linux_x86_64.tar.gz";
+    aarch64-linux = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_linux_arm64.tar.gz";
+    x86_64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_darwin_x86_64.tar.gz";
+    aarch64-darwin = "https://github.com/sonr-io/sonr/releases/download/hway%2Fv0.0.2/hway_darwin_arm64.tar.gz";
   };
 in
 stdenvNoCC.mkDerivation {
   pname = "hway";
-  version = "0.0.1";
+  version = "0.0.2";
   src = fetchurl {
     url = urlMap.${system};
     sha256 = shaMap.${system};
@@ -40,7 +40,8 @@ stdenvNoCC.mkDerivation {
   installPhase = ''
     mkdir -p $out/bin
     cp -vr ./hway $out/bin/hway
-    wrapProgram $out/bin/hway --prefix PATH : ${lib.makeBinPath ([ glibc stdenv.cc.cc.lib ])}
+    wrapProgram $out/bin/hway --prefix PATH : ${lib.makeBinPath ([ stdenv glibc ])}
+    wrapProgram $out/bin/hway --prefix PATH : ${lib.makeBinPath [ glibc stdenv.cc.cc.lib ]}
   '';
 
   system = system;
